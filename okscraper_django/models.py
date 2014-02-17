@@ -1,0 +1,14 @@
+# encoding: utf-8
+
+from django.db import models
+
+class ScraperRun(models.Model):
+    scraper_label = models.CharField(blank=False, null=False, max_length=20)
+    start_time = models.DateTimeField(blank=False, null=False, auto_now=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    logs = models.ManyToManyField('okscraper_django.ScraperRunLog')
+
+class ScraperRunLog(models.Model):
+    time = models.DateTimeField(blank=False, null=False, auto_now=True)
+    text = models.TextField(blank=False, null=False)
+    status = models.CharField(blank=False, null=False, max_length=10)

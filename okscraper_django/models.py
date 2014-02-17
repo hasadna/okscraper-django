@@ -8,7 +8,14 @@ class ScraperRun(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
     logs = models.ManyToManyField('okscraper_django.ScraperRunLog')
 
+    def __str__(self):
+        start_time = self.start_time.strftime('%d/%m/%y %H:%M')
+        return '%s | %s'%(self.scraper_label, start_time)
+
 class ScraperRunLog(models.Model):
     time = models.DateTimeField(blank=False, null=False, auto_now=True)
     text = models.TextField(blank=False, null=False)
     status = models.CharField(blank=False, null=False, max_length=10)
+
+    def __str__(self):
+        return '%s: %s \n'%(self.status, self.text)

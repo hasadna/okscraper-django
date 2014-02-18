@@ -10,7 +10,11 @@ class ScraperRun(models.Model):
 
     def __str__(self):
         start_time = self.start_time.strftime('%d/%m/%y %H:%M')
-        return '%s | %s'%(self.scraper_label, start_time)
+        status = 'SUCCESS'
+        failedLogs = self.logs.exclude(status='INFO')
+        if failedLogs.count() > 0:
+            status = failedLogs.order_by('-id')[0].status
+        return '%s | %s | %s'%(self.scraper_label, start_time, status)
 
 class ScraperRunLog(models.Model):
     time = models.DateTimeField(blank=False, null=False, auto_now=True)

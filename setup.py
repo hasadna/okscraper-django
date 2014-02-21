@@ -9,6 +9,6 @@ setup(
     license='GPLv3',
     url='https://github.com/orihoch/okscraper-django',
     packages=['okscraper_django'],
-    install_requires=['okscraper'],
-    dependency_links=['git+ssh://git@github.com/hasadna/okscraper.git#egg=okscraper']
+    install_requires=['okscraper==0.0.1'],
+    dependency_links=['git+ssh://git@github.com/hasadna/okscraper.git@v0.0.1#egg=okscraper-0.0.1']
 )

@@ -9,4 +9,5 @@ setup(
     license='GPLv3',
     url='https://github.com/orihoch/okscraper-django',
     packages=['okscraper_django']
+    dependency_links=['http://github.com/hasadna/okscraper/tarball/master#egg=okscraper']
 )

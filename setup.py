@@ -10,5 +10,5 @@ setup(
     url='https://github.com/orihoch/okscraper-django',
     packages=['okscraper_django'],
     install_requires=['okscraper==0.0.2'],
-    dependency_links=['git+ssh://git@github.com/hasadna/okscraper.git@v0.0.2#egg=okscraper-0.0.2']
+    dependency_links=['https://github.com/hasadna/okscraper/archive/v0.0.2.tar.gz#egg=okscraper-0.0.2']
 )

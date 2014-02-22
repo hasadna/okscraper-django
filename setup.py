@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='okscraper-django',
-    version='0.0.2',
+    version='0.0.3',
     description='okscraper django integration',
     author='Ori Hoch',
     author_email='ori@uumpa.com',

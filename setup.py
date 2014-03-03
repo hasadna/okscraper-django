@@ -8,7 +8,7 @@ setup(
     author_email='ori@uumpa.com',
     license='GPLv3',
     url='https://github.com/orihoch/okscraper-django',
-    packages=find_packages(exclude=["tests", "test.*"]),
+    packages=find_packages(exclude=["tests", "test.*", 'settings', 'manage']),
     install_requires=['okscraper==0.0.3'],
-    dependency_links=['https://github.com/hasadna/okscraper/archive/v0.0.3.tar.gz#egg=okscraper-0.0.3']
+    dependency_links=['https://github.com/OriHoch/okscraper/archive/master.tar.gz#egg=okscraper-0.0.3']
 )

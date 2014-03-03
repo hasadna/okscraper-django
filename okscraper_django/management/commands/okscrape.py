@@ -1,23 +1,31 @@
 # encoding: utf-8
 
 from django.core.management.base import BaseCommand
-from okscraper.cli.runner import Runner as OkscraperCliRunner
-import logging
 from optparse import make_option
 from okscraper_django.models import ScraperRun, ScraperRunLog
 from datetime import datetime
-import traceback
+import logging
 
-class DblogHandler(logging.Handler):
+from okscraper.cli.runner import DbLogRunner, LogRunner
 
-    def __init__(self, scraperrun, *args, **kwargs):
-        self._scraperrun = scraperrun
-        super(DblogHandler, self).__init__(*args, **kwargs)
+class DjangoDbLogRunner(DbLogRunner):
 
-    def emit(self, record):
+    def post_init(self):
+        scraper_label = self._module_name
+        if self._scraper_class_name != 'MainScraper':
+            scraper_label = '%s %s' % (scraper_label, self._scraper_class_name)
+        self._scraperrun = ScraperRun(scraper_label=scraper_label)
+        self._scraperrun.save()
+
+    def on_dblog_emit(self, record):
+        """@type record: logging.Record"""
         runlog = ScraperRunLog(text=record.getMessage(), status=record.levelname)
         runlog.save()
         self._scraperrun.logs.add(runlog)
+        self._scraperrun.save()
+
+    def post_run(self):
+        self._scraperrun.end_time = datetime.now()
         self._scraperrun.save()
 
 class Command(BaseCommand):
@@ -31,50 +39,18 @@ class Command(BaseCommand):
         ),
     )
 
-    def _define_logger(self, verbosity, dblog, scraperrun):
-        logger = logging.getLogger()
-        ch = logging.StreamHandler()
-        if verbosity == '1':
-            level = logging.WARN
-        elif verbosity == '2':
-            level = logging.INFO
-        elif verbosity == '3':
-            level = logging.DEBUG
-        else:
-            level = logging.ERROR
-        ch.setLevel(level)
-        logger.addHandler(ch)
-        if dblog:
-            handler = DblogHandler(scraperrun)
-            handler.setLevel(logging.INFO)
-            logger.addHandler(handler)
-
     def handle(self, *args, **options):
-        dblog = options.get('dblog', False)
-        scraperrun = None
-        if dblog:
-            scraper_label = args[0]
-            if len(args)>1 and args[1] is not None: scraper_label=scraper_label+'.'+args[1]
-            scraperrun = ScraperRun(scraper_label=scraper_label)
-            scraperrun.save()
-        self._define_logger(
-            options.get('verbosity', '1'), dblog,
-            scraperrun
-        )
-        runner = OkscraperCliRunner(
-            args[0],
-            args[1] if len(args)>1 else None,
-            *args[2:] if len(args)>2 else []
-        )
-        if dblog:
-            try:
-                runner.run()
-            except:
-                print traceback.format_exc()
-                runlog = ScraperRunLog(text=traceback.format_exc(), status='EXCEPTION')
-                runlog.save()
-                scraperrun.logs.add(runlog)
-            scraperrun.end_time = datetime.now()
-            scraperrun.save()
+        runnerArgs = [args[0], args[1] if len(args)>1 else None]
+        runnerKwargs = {
+            'log_verbosity': options.get('verbosity', '1'),
+            'log_handler': logging.StreamHandler(),
+            'test_logs': [
+                 {'level': logging.ERROR, 'msg': 'ERROR!'},
+                {'level': logging.DEBUG, 'msg': 'DEBUG'},
+            ]
+        }
+        if options.get('dblog', False):
+            runner = DjangoDbLogRunner(*runnerArgs, **runnerKwargs)
         else:
-            runner.run()
+            runner = LogRunner(*runnerArgs, **runnerKwargs)
+        runner.run()

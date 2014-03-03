@@ -1,2 +1,4 @@
 
+django
+
 https://github.com/OriHoch/okscraper/archive/master.tar.gz#egg=okscraper

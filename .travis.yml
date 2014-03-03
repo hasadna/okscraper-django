@@ -2,7 +2,6 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install --upgrade setuptools
-  - pip install -e .
+  - pip install --process-dependency-links .
 script:
   - python manage.py test

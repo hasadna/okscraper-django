@@ -1,4 +1,4 @@
 
 django
 
-https://github.com/OriHoch/okscraper/archive/master.tar.gz#egg=okscraper
+https://github.com/OriHoch/okscraper/archive/v0.0.4.tar.gz#egg=okscraper-0.0.4

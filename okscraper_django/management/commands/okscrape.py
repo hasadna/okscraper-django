@@ -43,11 +43,7 @@ class Command(BaseCommand):
         runnerArgs = [args[0], args[1] if len(args)>1 else None]
         runnerKwargs = {
             'log_verbosity': options.get('verbosity', '1'),
-            'log_handler': logging.StreamHandler(),
-            'test_logs': [
-                 {'level': logging.ERROR, 'msg': 'ERROR!'},
-                {'level': logging.DEBUG, 'msg': 'DEBUG'},
-            ]
+            'log_handler': logging.StreamHandler()
         }
         if options.get('dblog', False):
             runner = DjangoDbLogRunner(*runnerArgs, **runnerKwargs)

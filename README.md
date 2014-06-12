@@ -1,11 +1,7 @@
 okscraper-django
 ================
 
-okscraper django integration
+Okscraper-django is a python module that provide django integration for [okscraper](http://okscraper.readthedocs.org/).
 
+Documentation: http://okscraper-django.readthedocs.org/
 
-Available services
-------------------
-
-* [okscrape management command](okscraper_django/management/commands/README.md)
-* TODO: [django specific storages](https://github.com/hasadna/okscraper-django/issues/3)

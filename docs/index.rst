@@ -7,6 +7,10 @@ Okscraper is a scraping framework and okscraper-django adds some features such a
 
 If you are new to the okscraper framework you should check out the `okscraper documentation <http://okscraper.readthedocs.org/>`_ first.
 
+Installation: `pip install okscraper-django`
+
+The code is on `GitHub <https://github.com/hasadna/okscraper-django>`_.
+
 .. toctree::
     :maxdepth: 2
     

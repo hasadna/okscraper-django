@@ -1,4 +1,8 @@
 language: python
+sudo: false
+cache:
+  pip: true
+  apt: true
 python:
   - "2.7"
 install:

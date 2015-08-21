@@ -1,6 +1,7 @@
 # encoding: utf-8
-
 from django.db import models
+from django.utils import timezone
+
 
 class ScraperRun(models.Model):
     scraper_label = models.CharField(blank=False, null=False, max_length=20)
@@ -17,7 +18,7 @@ class ScraperRun(models.Model):
         return '%s | %s | %s'%(self.scraper_label, start_time, status)
 
 class ScraperRunLog(models.Model):
-    time = models.DateTimeField(blank=False, null=False, auto_now=True)
+    time = models.DateTimeField(blank=False, null=False, default=timezone.now)
     text = models.TextField(blank=False, null=False)
     status = models.CharField(blank=False, null=False, max_length=10)
 

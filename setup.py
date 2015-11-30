@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='okscraper-django',
-    version='0.0.9',
+    version='0.0.10',
     description='okscraper django integration',
     author='Ori Hoch',
     author_email='ori@uumpa.com',

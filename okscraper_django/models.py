@@ -9,18 +9,18 @@ class ScraperRun(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
     logs = models.ManyToManyField('okscraper_django.ScraperRunLog')
 
-    def __str__(self):
+    def __unicode__(self):
         start_time = self.start_time.strftime('%d/%m/%y %H:%M')
         status = 'SUCCESS'
         failedLogs = self.logs.exclude(status='INFO')
         if failedLogs.count() > 0:
             status = failedLogs.order_by('-id')[0].status
-        return '%s | %s | %s'%(self.scraper_label, start_time, status)
+        return u'%s | %s | %s'%(self.scraper_label, start_time, status)
 
 class ScraperRunLog(models.Model):
     time = models.DateTimeField(blank=False, null=False, default=timezone.now)
     text = models.TextField(blank=False, null=False)
     status = models.CharField(blank=False, null=False, max_length=10)
 
-    def __str__(self):
-        return '%s: %s \n'%(self.status, self.text)
+    def __unicode__(self):
+        return u'%s: %s \n'%(self.status, self.text)

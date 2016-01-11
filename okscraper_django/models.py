@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class ScraperRun(models.Model):
-    scraper_label = models.CharField(blank=False, null=False, max_length=20)
+    scraper_label = models.CharField(blank=False, null=False, max_length=100)
     start_time = models.DateTimeField(blank=False, null=False, auto_now=True)
     end_time = models.DateTimeField(blank=True, null=True)
     logs = models.ManyToManyField('okscraper_django.ScraperRunLog')

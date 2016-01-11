@@ -82,7 +82,7 @@ class CommandDbLogMixin(object):
         self._dblog = not options.get('nodblog')
         self._initialize_logger(options.get('verbosity'), self._dblog)
         if self._dblog:
-            self._scraper_run = ScraperRun(scraper_label=self._get_scraper_label())
+            self._scraper_run = ScraperRun(scraper_label=self._get_scraper_label()[:99])
             self._scraper_run.save()
         try:
             yield

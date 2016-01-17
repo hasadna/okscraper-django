@@ -1,4 +1,4 @@
-from django.utils import unittest
+import unittest
 from okscraper_django.management.base_commands import BaseDbLogCommand
 from okscraper_django.models import ScraperRun
 

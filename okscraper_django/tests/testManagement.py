@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from django.utils import unittest
+import unittest
 from okscraper_django.management.commands.okscrape import Command
 from okscraper_django.models import ScraperRun
 

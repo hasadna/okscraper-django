@@ -1,4 +1,1 @@
-
-django
-
-https://github.com/hasadna/okscraper/archive/v0.0.4.tar.gz#egg=okscraper-0.0.4
+okscraper==0.0.6

@@ -30,21 +30,28 @@ class DjangoDbLogRunner(DbLogRunner):
 
 class Command(BaseCommand):
 
-    args = 'module [class] [arg]..'
+    args = 'module [class]'
 
     option_list = BaseCommand.option_list + (
         make_option(
             '--dblog', action='store_true', dest="dblog", default=False,
             help='log run details to db for monitoring of scraper jobs'
         ),
+        make_option(
+            '--scraper-args', dest='scraperargs', default='',
+            help='comma-separated extra arguments to pass on to the scraper',
+        )
     )
 
     def handle(self, *args, **options):
         runnerArgs = [args[0], args[1] if len(args)>1 else None]
         runnerKwargs = {
             'log_verbosity': options.get('verbosity', '1'),
-            'log_handler': logging.StreamHandler()
+            'log_handler': logging.StreamHandler(),
         }
+        extra_scraper_args = options.get('scraperargs', '')
+        if extra_scraper_args:
+            runnerKwargs['extra_scraper_args'] = extra_scraper_args.split(',')
         if options.get('dblog', False):
             runner = DjangoDbLogRunner(*runnerArgs, **runnerKwargs)
         else:
